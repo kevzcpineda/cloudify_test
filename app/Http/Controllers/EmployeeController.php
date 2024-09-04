@@ -53,5 +53,14 @@ class EmployeeController extends Controller
         ]);
     }
 
+        public function destroy(Employee $employee)
+    {
+        $employee->delete();
+        return Inertia::render('EmployeeList', [
+            'employees' => Employee::all(),
+        ]);
+    }
+
+
 }
 

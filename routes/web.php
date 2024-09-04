@@ -21,6 +21,7 @@ Route::get('/create',[EmployeeController::class, 'create']);
 Route::post('/',[EmployeeController::class, 'store']);
 Route::get('/{employee}/edit',[EmployeeController::class, 'edit']);
 Route::put('/{employee}',[EmployeeController::class, 'update']);
+Route::delete('/{employee}',[EmployeeController::class, 'destroy']);
 
 Route::get('/service-record',[ServiceRecordController::class, 'index']);
 Route::get('/department',[DepartmentController::class, 'index']);
