@@ -20,7 +20,7 @@ Route::get('/',[EmployeeController::class, 'index']);
 Route::get('/create',[EmployeeController::class, 'create']);
 Route::post('/',[EmployeeController::class, 'store']);
 Route::get('/{employee}/edit',[EmployeeController::class, 'edit']);
-Route::get('/{employee}',[EmployeeController::class, 'update']);
+Route::put('/{employee}',[EmployeeController::class, 'update']);
 
 Route::get('/service-record',[ServiceRecordController::class, 'index']);
 Route::get('/department',[DepartmentController::class, 'index']);

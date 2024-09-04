@@ -5,19 +5,31 @@ import { reactive } from "vue";
 import { router } from "@inertiajs/vue3";
 import { useForm } from "@inertiajs/vue3";
 
+const props = defineProps({
+    employee: {
+        type: Object,
+        required: true,
+    },
+});
+const employee = reactive({ ...props.employee });
+
+const form = useForm({
+    name: employee.name ? employee.name : null,
+    address: employee.address ? employee.address : null,
+    gender: employee.gender ? employee.gender : null,
+});
+
 function submit() {
+    if (employee) {
+        return router.put(`/${employee.id}`, form);
+    }
     router.post("/", form);
 }
-const form = useForm({
-    name: "kecun",
-    address: null,
-    gender: null,
-});
 </script>
 
 <template>
     <AppLayout>
-        <form @submit.prevent="form.post('/')">
+        <form @submit.prevent="submit">
             <div>
                 <label
                     for="name"

@@ -36,7 +36,22 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        return Inertia::render('EmployeeForm', compact('employee'));
+        return Inertia::render('EmployeeForm', ["employee" => $employee]);
+    }
+
+    public function update(Request $request, Employee $employee)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'gender' => 'required|string|max:255',
+        ]);
+
+        $employee->update($request->all());
+        return Inertia::render('EmployeeList', [
+            'employees' => Employee::all(),
+        ]);
     }
 
 }
+

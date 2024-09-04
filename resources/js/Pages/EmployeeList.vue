@@ -37,7 +37,7 @@ defineProps({
                     >
                         <td class="border-t">
                             <Link
-                                href="/{{employee.id}}/edit"
+                                :href="`/${employee.id}/edit`"
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
                                 {{ employee.name }}
@@ -45,7 +45,7 @@ defineProps({
                         </td>
                         <td class="border-t">
                             <Link
-                                href="/{{employee.id}}/edit"
+                                :href="`/${employee.id}/edit`"
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
                                 {{ employee.address }}
@@ -53,7 +53,7 @@ defineProps({
                         </td>
                         <td class="border-t">
                             <Link
-                                href="/{{employee.id}}/edit"
+                                :href="`/${employee.id}/edit`"
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
                                 {{ employee.gender }}
