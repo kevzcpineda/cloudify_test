@@ -31,6 +31,11 @@ Route::put('/service-record/{serviceRecord}',[ServiceRecordController::class, 'u
 Route::delete('/service-record/{serviceRecord}',[ServiceRecordController::class, 'destroy']);
 
 Route::get('/department',[DepartmentController::class, 'index']);
+Route::get('/department/create',[DepartmentController::class, 'create']);
+Route::post('/department',[DepartmentController::class, 'store']);
+Route::get('/department/{department}/edit',[DepartmentController::class, 'edit']);
+Route::put('/department/{department}',[DepartmentController::class, 'update']);
+Route::delete('/department/{department}',[DepartmentController::class, 'destroy']);
 
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
