@@ -24,6 +24,12 @@ Route::put('/{employee}',[EmployeeController::class, 'update']);
 Route::delete('/{employee}',[EmployeeController::class, 'destroy']);
 
 Route::get('/service-record',[ServiceRecordController::class, 'index']);
+Route::get('/service-record/create',[ServiceRecordController::class, 'create']);
+Route::post('/service-record',[ServiceRecordController::class, 'store']);
+Route::get('/service-record/{serviceRecord}/edit',[ServiceRecordController::class, 'edit']);
+Route::put('/service-record/{serviceRecord}',[ServiceRecordController::class, 'update']);
+Route::delete('/service-record/{serviceRecord}',[ServiceRecordController::class, 'destroy']);
+
 Route::get('/department',[DepartmentController::class, 'index']);
 
 // Route::get('/', function () {
