@@ -9,8 +9,9 @@ class EmployeeController extends Controller
 {
     public function index()
     {
+        // dd( Employee::with('latestServiceRecord')->get());
         return Inertia::render('EmployeeList', [
-            'employees' => Employee::all(),
+            'employees' => Employee::with('serviceRecords.department')->get(),
         ]);
     }
 

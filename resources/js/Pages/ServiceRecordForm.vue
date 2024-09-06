@@ -10,15 +10,27 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    employees: {
+        type: Object,
+        required: true,
+    },
+    departments: {
+        type: Object,
+        required: true,
+    },
 });
 const serviceRecord = reactive({ ...props.serviceRecord });
+const employees = reactive({ ...props.employees });
+const departments = reactive({ ...props.departments });
 
 const form = useForm({
-    title: serviceRecord.title ? serviceRecord.title : null,
-    start_date: serviceRecord.start_date ? serviceRecord.start_date : null,
-    salary: serviceRecord.salary ? serviceRecord.salary : null,
+    title: serviceRecord.title || null,
+    start_date: serviceRecord.start_date || null,
+    salary: serviceRecord.salary || null,
+    employee_id: serviceRecord.employee_id || null,
+    department_id: serviceRecord.department_id || null,
 });
-console.log(serviceRecord);
+
 function submit() {
     if (serviceRecord.id) {
         router.put(`/service-record/${serviceRecord.id}`, form);
@@ -101,6 +113,55 @@ function submit() {
                 </div>
             </div>
 
+            <div class="sm:col-span-3">
+                <label
+                    for="employee"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Employee</label
+                >
+                <div class="mt-2">
+                    <select
+                        v-model="form.employee_id"
+                        id="employee"
+                        name="employee"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                        <option></option>
+                        <option
+                            v-for="employee in employees"
+                            :key="employee.id"
+                            :value="employee.id"
+                        >
+                            {{ employee.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="sm:col-span-3">
+                <label
+                    for="department"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Department</label
+                >
+                <div class="mt-2">
+                    <select
+                        v-model="form.department_id"
+                        id="department"
+                        name="department"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                        <option></option>
+                        <option
+                            v-for="department in departments"
+                            :key="department.id"
+                            :value="department.id"
+                        >
+                            {{ department.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
             <button
                 type="submit"
                 :disabled="form.processing"

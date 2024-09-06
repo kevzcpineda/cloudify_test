@@ -1,9 +1,14 @@
 <script setup>
+import { onMounted } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 
-defineProps({
+const props = defineProps({
     employees: Object,
+});
+
+onMounted(() => {
+    console.log(props.employees);
 });
 </script>
 
@@ -27,6 +32,7 @@ defineProps({
                         <th class="pb-4 pt-6 px-6">Name</th>
                         <th class="pb-4 pt-6 px-6">Address</th>
                         <th class="pb-4 pt-6 px-6">Gender</th>
+                        <th class="pb-4 pt-6 px-6">Department</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +63,14 @@ defineProps({
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
                                 {{ employee.gender }}
+                            </Link>
+                        </td>
+                        <td class="border-t">
+                            <Link
+                                :href="`/${employee.id}/edit`"
+                                class="flex items-center px-6 py-4 focus:text-indigo-500"
+                            >
+                                {{ employee.service_records.department.name }}
                             </Link>
                         </td>
                     </tr>

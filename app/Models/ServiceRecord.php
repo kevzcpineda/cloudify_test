@@ -9,7 +9,8 @@ class ServiceRecord extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title','start_date','salary'];
+    protected $fillable = ['title','start_date','salary','employee_id',
+        'department_id',];
 
     public function employee()
     {
@@ -18,7 +19,7 @@ class ServiceRecord extends Model
 
     public function department()
     {
-        return $this->hasOne(Department::class);
+        return $this->belongsTo(Department::class);
     }
 
 }

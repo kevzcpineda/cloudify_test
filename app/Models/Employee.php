@@ -13,6 +13,11 @@ class Employee extends Model
 
     public function serviceRecords()
     {
-        return $this->hasMany(ServiceRecord::class);
+        return $this->hasOne(ServiceRecord::class)->latestOfMany();
+    }
+
+     public function latestServiceRecord()
+    {
+        return $this->hasOne(ServiceRecord::class)->latestOfMany();
     }
 }
