@@ -1,12 +1,17 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
     employees: Object,
 });
+const search = ref("");
 
+function searchEmployees() {
+    router.get("/", { search: search.value });
+}
 onMounted(() => {
     console.log(props.employees);
 });
@@ -16,6 +21,14 @@ onMounted(() => {
     <AppLayout>
         <div class="flex justify-between content-center mb-10">
             <h1 class="text-2xl font-bold">Employee</h1>
+            <form @submit.prevent="searchEmployees">
+                <input
+                    v-model="search"
+                    type="text"
+                    placeholder="Search employees or departments..."
+                />
+                <button type="submit">Search</button>
+            </form>
             <Link
                 href="/create"
                 as="button"
@@ -70,7 +83,9 @@ onMounted(() => {
                                 :href="`/${employee.id}/edit`"
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
-                                {{ employee.service_records.department.name }}
+                                {{
+                                    employee?.service_records?.department?.name
+                                }}
                             </Link>
                         </td>
                     </tr>

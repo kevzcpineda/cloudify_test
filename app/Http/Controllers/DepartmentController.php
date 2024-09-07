@@ -6,10 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 class DepartmentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
+
+        $department = Department::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
         return Inertia::render('DepartmentList', [
-            'departments' => Department::all(),
+            'departments' =>  $department,
         ]);
     }
 

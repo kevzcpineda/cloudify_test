@@ -10,6 +10,7 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    errors: Object,
 });
 const employee = reactive({ ...props.employee });
 
@@ -18,7 +19,7 @@ const form = useForm({
     address: employee.address ? employee.address : null,
     gender: employee.gender ? employee.gender : null,
 });
-console.log(employee);
+
 function submit() {
     if (employee.id) {
         router.put(`/${employee.id}`, form);
@@ -54,8 +55,8 @@ function submit() {
                         id="name"
                         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
-                    <div v-if="form.errors.name" class="text-red-500">
-                        {{ form.errors.name }}
+                    <div v-if="errors.name" class="text-red-500">
+                        {{ errors.name }}
                     </div>
                 </div>
             </div>
@@ -73,8 +74,8 @@ function submit() {
                         id="address"
                         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
-                    <div v-if="form.errors.address" class="text-red-500">
-                        {{ form.errors.address }}
+                    <div v-if="errors.address" class="text-red-500">
+                        {{ errors.address }}
                     </div>
                 </div>
             </div>
@@ -92,8 +93,8 @@ function submit() {
                         id="gender"
                         class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
-                    <div v-if="form.errors.gender" class="text-red-500">
-                        {{ form.errors.gender }}
+                    <div v-if="errors.gender" class="text-red-500">
+                        {{ errors.gender }}
                     </div>
                 </div>
             </div>

@@ -9,9 +9,15 @@ use App\Models\Department;
 
 class ServiceRecordController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('ServiceRecordList',['serviceRecords' => ServiceRecord::all(),]);
+        $search = $request->search;
+        $serviceRecord = ServiceRecord::query()
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
+            ->get();
+        return Inertia::render('ServiceRecordList',['serviceRecords' =>  $serviceRecord ]);
     }
 
     public function create()

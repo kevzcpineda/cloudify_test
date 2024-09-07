@@ -7,11 +7,20 @@ use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // dd( Employee::with('latestServiceRecord')->get());
-        return Inertia::render('EmployeeList', [
-            'employees' => Employee::with('serviceRecords.department')->get(),
+        $search = $request->search;
+
+            $employees = Employee::with('serviceRecords.department')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
+        // return Inertia::render('EmployeeList', [
+        //     'employees' => Employee::with('serviceRecords.department')->get(),
+        // ]);
+          return Inertia::render('EmployeeList', [
+            'employees' => $employees,
         ]);
     }
 

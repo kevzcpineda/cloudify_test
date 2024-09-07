@@ -1,16 +1,27 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
+import { ref } from "vue";
+import { router } from "@inertiajs/vue3";
 
 defineProps({
     serviceRecords: Object,
 });
+const search = ref("");
+
+function searchServiceRecord() {
+    router.get("/service-record", { search: search.value });
+}
 </script>
 
 <template>
     <AppLayout>
         <div class="flex justify-between content-center mb-10">
             <h1 class="text-2xl font-bold">Service Record</h1>
+            <form @submit.prevent="searchServiceRecord">
+                <input v-model="search" type="text" placeholder="Search " />
+                <button type="submit">Search</button>
+            </form>
             <Link
                 href="/service-record/create"
                 as="button"

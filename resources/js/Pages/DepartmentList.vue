@@ -1,16 +1,28 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
+import { router } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 defineProps({
     departments: Object,
 });
+
+const search = ref("");
+
+function searchDeparments() {
+    router.get("/department", { search: search.value });
+}
 </script>
 
 <template>
     <AppLayout>
         <div class="flex justify-between content-center mb-10">
             <h1 class="text-2xl font-bold">Departments</h1>
+            <form @submit.prevent="searchDeparments">
+                <input v-model="search" type="text" placeholder="Search " />
+                <button type="submit">Search</button>
+            </form>
             <Link
                 href="/department/create"
                 as="button"
