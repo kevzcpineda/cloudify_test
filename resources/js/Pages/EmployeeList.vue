@@ -3,15 +3,23 @@ import { onMounted, ref } from "vue";
 import AppLayout from "@/Layouts/AppLayout.vue";
 import { Link } from "@inertiajs/vue3";
 import { router } from "@inertiajs/vue3";
+import { reactive } from "vue";
 
 const props = defineProps({
     employees: Object,
+    deparments: Object,
 });
+const deparments = reactive({ ...props.deparments });
+
 const search = ref("");
+const departmentId = ref("");
 
 function searchEmployees() {
-    router.get("/", { search: search.value });
+    router.get("/", { search: search.value, departmentId: departmentId.value });
 }
+// function filterDepartment() {
+//     router.get("/", { departmentId: departmentId.value });
+// }
 onMounted(() => {
     console.log(props.employees);
 });
@@ -25,10 +33,31 @@ onMounted(() => {
                 <input
                     v-model="search"
                     type="text"
-                    placeholder="Search employees or departments..."
+                    placeholder="Search employees name"
                 />
                 <button type="submit">Search</button>
             </form>
+
+            <div class="mt-2">
+                <form @submit.prevent="searchEmployees">
+                    <select
+                        v-model="departmentId"
+                        id="department"
+                        name="department"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                        <option></option>
+                        <option
+                            v-for="deparment in deparments"
+                            :key="deparment.id"
+                            :value="deparment.id"
+                        >
+                            {{ deparment.name }}
+                        </option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
             <Link
                 href="/create"
                 as="button"
@@ -84,7 +113,8 @@ onMounted(() => {
                                 class="flex items-center px-6 py-4 focus:text-indigo-500"
                             >
                                 {{
-                                    employee?.service_records?.department?.name
+                                    employee?.latest_service_record?.department
+                                        ?.name
                                 }}
                             </Link>
                         </td>

@@ -4,23 +4,28 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Models\Department;
 
 class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
         $search = $request->search;
-
-            $employees = Employee::with('serviceRecords.department')
+       $departmentId = $request->departmentId;
+        $departments = Department::all();
+        $employees = Employee::with('latestServiceRecord.department')
             ->when($search, function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%");
             })
+            ->when($departmentId, function ($query) use ($departmentId) {
+                $query->whereHas('latestServiceRecord.department', function ($query) use ($departmentId) {
+                    $query->where('id', $departmentId);
+                });
+            })
             ->get();
-        // return Inertia::render('EmployeeList', [
-        //     'employees' => Employee::with('serviceRecords.department')->get(),
-        // ]);
-          return Inertia::render('EmployeeList', [
+        return Inertia::render('EmployeeList', [
             'employees' => $employees,
+            'deparments' =>  $departments
         ]);
     }
 
